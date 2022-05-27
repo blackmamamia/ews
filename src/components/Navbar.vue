@@ -1,117 +1,28 @@
 <template>
-  <div style="border-radius: 4px; background-color: gray; height: 70px">
-    <div v-show="$route.name === 'HomePage'">
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          margin-top: 10px;
-        "
-        @click="contractorDeclare"
-      >
-        出土端申報作業
-      </button>
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          margin-top: 10px;
-        "
-        @click="shelterDeclare"
-      >
-        需土端申報作業
-      </button>
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="logout()"
-      >
-        登出
-      </button>
-    </div>
-    <div v-show="$route.name === 'contractDeclare'">
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="contractDeclareSave"
-      >
-        儲存
-      </button>
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="back"
-      >
-        返回
-      </button>
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="logout()"
-      >
-        登出
-      </button>
-    </div>
-    <div v-show="$route.name === 'shelterDeclare'">
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="shelterDeclareSave"
-      >
-        儲存
-      </button>
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="back"
-      >
-        返回
-      </button>
-      <button
-        style="
-          font-size: 20px;
-          margin-left: 15px;
-          height: 50px;
-          width: 100px;
-          margin-top: 10px;
-        "
-        @click="logout()"
-      >
-        登出
-      </button>
-    </div>
+  <div style="width: 100%">
+    <b-navbar type="dark" variant="dark">
+      <b-navbar-nav>
+        <b-nav-item href="/homepage">首頁</b-nav-item>
+        <b-nav-item-dropdown text="申報作業" right>
+          <b-dropdown-item href="/declare/contractDeclare"
+            >出土申報</b-dropdown-item
+          >
+          <b-dropdown-item href="/declare/shelterDeclare"
+            >需土申報</b-dropdown-item
+          >
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+      <b-navbar-nav right>
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <a>使用者管理</a>
+          </template>
+          <b-dropdown-item @click="searchETH">查詢錢包餘額</b-dropdown-item>
+          <b-dropdown-item href="/Login">登出</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-navbar>
   </div>
 </template>
 
@@ -121,6 +32,11 @@ export default {
   name: 'Navbar',
   data () {
     return {}
+  },
+  computed: {
+    web3 () {
+      return this.$store.state.web3
+    }
   },
   methods: {
     searchETH () {
@@ -134,22 +50,6 @@ export default {
         }
       })
     },
-    contractorDeclare () {
-      const web3 = new Web3(window.web3.currentProvider)
-      this.$router.push({ name: 'contractDeclare' })
-    },
-    shelterDeclare () {
-      this.$router.push({ name: 'shelterDeclare' })
-    },
-    contractDeclareSave () {
-      this.$router.push({ name: 'HomePage' })
-    },
-    shelterDeclareSave () {
-      this.$router.push({ name: 'HomePage' })
-    },
-    back () {
-      this.$router.push({ name: 'HomePage' })
-    },
     logout () {
       this.$router.push({ name: 'Login' })
     }
@@ -157,5 +57,20 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.btn {
+  background-color: gray;
+  font-size: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  color: white;
+  border: 0;
+}
+.btn:hover {
+  color: black;
+  background-color: rgb(228, 228, 228);
+  transform: scale(1.1);
+}
 </style>
