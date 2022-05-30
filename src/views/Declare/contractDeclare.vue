@@ -16,7 +16,7 @@
         width: 1000px;
         height: 500px;
         margin-left: 450px;
-        margin-top: 150px;
+        position: auto;
       "
     >
       <div style="padding-top: 70px">
@@ -70,13 +70,16 @@
       <div style="margin-left: 500px; margin-top: 50px">
         <b-button class="btn" @click="contractDeclareSave">儲存</b-button>
         <b-button @click="back" style="margin-left: 30px">返回</b-button>
+        <b-button variant="danger" @click="test">測試鈕</b-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Web3 from 'web3'
 import Navbar from '@/components/Navbar.vue'
+import { ethContract, fromAddress } from '@/service/index.js'
 
 export default {
   name: 'contractDeclare',
@@ -106,6 +109,16 @@ export default {
       if (yes) {
         this.$router.push({ name: 'HomePage' })
       }
+    },
+    async test () {
+      await ethContract.methods
+        .sendOutputInfo('E801', '新北市', 100)
+        .send({
+          from: '0x791a0eb4eBf156447a6a9cdeCf7b655903B7793B'
+        })
+        .then(function (receipt) {
+          console.log(receipt)
+        })
     }
   }
 }

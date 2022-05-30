@@ -16,7 +16,7 @@
         width: 1000px;
         height: 500px;
         margin-left: 450px;
-        margin-top: 150px;
+        position: auto;
       "
     >
       <div style="padding-top: 70px">
