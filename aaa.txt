@@ -1,0 +1,77 @@
+pragma solidity ^0.8.7;
+// SPDX-License-Identifier: MIT
+
+contract EarthWorkSystem {
+    
+    // uint256 totalOutputInfos;
+    // uint256 totalInputInfos;
+
+    mapping(address => outputInfo) public outputInfoList;
+
+    struct outputInfo {
+        string siteName;
+        string siteAddress;
+        uint stoneAmount;
+        string stoneType;
+    }
+
+    struct InputInfo {
+        string siteName;
+        string siteAddress;
+        uint stoneAmount;
+        string stoneType;
+    }
+
+    outputInfo[] public outputInfos;
+    // InputInfo[] allInputInfos;
+
+    // mapping(address => uint256) outputInfoPerUser;
+    // mapping(address => uint256) inputInfoPerUser;
+
+    // event NewOutputInfo(string _siteName, string _siteAddress, uint stoneAmount);
+    // event NewInputInfo(string _siteName, string _siteAddress, uint stoneAmount);
+
+    function sendOutputInfo(string memory siteName, string memory siteAddress, uint stoneAmount, string memory stoneType) public {
+        outputInfos.push(outputInfo(siteName, siteAddress, stoneAmount, stoneType));
+        // totalOutputInfos += 1;
+        outputInfoList[msg.sender] = outputInfo(siteName, siteAddress, stoneAmount, stoneType);
+
+        // emit NewOutputInfo(_siteName, _siteAddress, _stoneAmount);
+    }
+
+    // function sendInputInfo(string memory _siteName, string memory _siteAddress, uint _stoneAmount) public {
+    //     allInputInfos.push(InputInfo(_siteName, _siteAddress, _stoneAmount));
+
+    //     totalInputInfos += 1;
+    //     // inputInfoPerUser[msg.sender] += 1;
+
+    //     // emit NewOutputInfo(_siteName, _siteAddress, _stoneAmount);
+    // }
+
+    function getOutputInfo () public view returns (uint) {
+        return outputInfos.length;
+    }
+
+    // function getAllOutputInfos () public view returns (OutputInfo[] memory) {
+    //     return allOutputInfos;
+    // }
+
+    // function getAllInputInfos () public view returns (InputInfo[] memory) {
+    //     return allInputInfos;
+    // }
+
+    // function getTotalOutputInfos() public view returns (uint256) {
+    //     return totalOutputInfos;
+    // }
+
+    // function getTotalInputInfos() public view returns (uint256) {
+    //     return totalInputInfos;
+    // }
+
+    // function matchAmount() view public returns (uint) {
+    //     uint ans = this.stoneAmount - this.stoneAmount;
+    //     return ans;
+
+    // }
+
+}
