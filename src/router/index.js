@@ -8,6 +8,7 @@ const routes = [
   {
     path: '/',
     redirect: { name: 'Login' }
+
   },
   {
     path: '/login',
@@ -26,20 +27,36 @@ const routes = [
     component: () => import('../views/HomePage')
   },
   {
-    path: '/declare/contractDeclare',
-    name: 'contractDeclare',
+    path: '/output/outputDeclare',
+    name: 'outputDeclare',
     meta: {
-      title: '承造商申報'
+      title: '出土申報'
     },
-    component: () => import('../views/Declare/contractDeclare')
+    component: () => import('../views/Output/outputDeclare')
   },
   {
-    path: '/declare/shelterDeclare',
-    name: 'shelterDeclare',
+    path: '/output/outputLookup',
+    name: 'outputLookup',
     meta: {
-      title: '收容場所申報'
+      title: '出土資料查詢'
     },
-    component: () => import('../views/Declare/shelterDeclare')
+    component: () => import('../views/Output/outputLookup')
+  },
+  {
+    path: '/input/inputDeclare',
+    name: 'inputDeclare',
+    meta: {
+      title: '需土申報'
+    },
+    component: () => import('../views/Input/inputDeclare')
+  },
+  {
+    path: '/input/inputLookup',
+    name: 'inputLookup',
+    meta: {
+      title: '需土資料查詢'
+    },
+    component: () => import('../views/Input/inputLookup')
   }
   // {
   //   path: '/home',

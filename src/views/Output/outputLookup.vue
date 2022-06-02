@@ -5,7 +5,8 @@
     </div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">首頁</li>
+        <li class="breadcrumb-item"><a href="/homepage">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">出土資料查詢</li>
       </ol>
     </nav>
     <div>
@@ -24,28 +25,33 @@
         :current-page="currentPage"
         fixed
       >
-        <template #cell(type)="data">
+        <template #cell(siteName)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(produceAmount)="data">
+        <template #cell(siteAddress)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(demandAmount)="data">
+        <template #cell(stoneAmount)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template v-slot:cell(actions)="{ item }">
-          <span><b-btn @click="editItem(item)">撮合</b-btn></span>
+        <template #cell(stoneType)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
         </template>
       </b-table>
+      <div>
+        <button @click="test">測試</button>
+      </div>
     </div>
   </div>
 </template>
@@ -55,45 +61,39 @@ import Navbar from '@/components/Navbar.vue'
 import { ethContract } from '@/service/index.js'
 
 export default {
-  name: 'HomePage',
   data () {
     return {
-      perPage: 16,
-      currentPage: 1,
-      // sortBy: null,
-      // sortDesc: false,
       fields: [
         {
-          key: 'type',
-          label: '土質種類',
-          tdClass: 'align-middle'
+          key: 'siteName',
+          label: '工地名稱',
+          sortable: true,
+          sortDirection: 'desc'
         },
         {
-          key: 'produceAmount',
-          label: '出土數量',
-          tdClass: 'align-middle'
+          key: 'siteAddress',
+          label: '工地地點',
+          sortable: true,
+          sortDirection: 'desc'
         },
         {
-          key: 'demandAmount',
+          key: 'stoneAmount',
           label: '需土數量',
-          tdClass: 'align-middle'
+          sortable: true,
+          sortDirection: 'desc'
         },
         {
-          key: 'actions',
-          label: '操作',
-          tdClass: 'align-middle'
+          key: 'stoneType',
+          label: '土質種類',
+          sortable: true,
+          sortDirection: 'desc'
         }
       ],
       list: [],
+      currentPage: 1,
+      perPage: 10,
       filter: null,
       show: true
-      // items: [
-      //   {
-      //     type: 'B1',
-      //     produceAmount: '100',
-      //     demandAmount: '100'
-      //   }
-      // ]
     }
   },
   async mounted () {
@@ -104,24 +104,39 @@ export default {
         return receipt
       })
     for (let i = 0; i < amount; i++) {
-      const OutputInfo = await ethContract.methods
-        .allOutputInfos(i)
+      const outputInfo = await ethContract.methods
+        .outputInfos(i)
         .call()
         .then(function (receipt) {
           return receipt
         })
-      this.list.push(OutputInfo)
+
+      this.list.push(outputInfo)
     }
     this.show = false
   },
-  methods: {},
-  components: { Navbar },
+  components: {
+    Navbar
+  },
   computed: {
-    rows () {
+    totalRows () {
       return this.list.length
     }
   },
-  watch: {}
+  methods: {
+    async test () {
+      await ethContract.methods
+        .sendOutputInfo('E802', '台北市', 200, 'B2')
+        .send({
+          from: (
+            await window.ethereum.request({ method: 'eth_requestAccounts' })
+          )[0]
+        })
+        .then(function (receipt) {
+          console.log(receipt)
+        })
+    }
+  }
 }
 </script>
 

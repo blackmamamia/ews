@@ -110,140 +110,85 @@ import Web3 from 'web3'
 
 const web3 = new Web3(Web3.givenProvider || 'ws://http://localhost:8080/')
 // 合約地址
-const contractAddress = '0x6B260783FBf233c5f62be22eb5A11F161686deB2'
+const contractAddress = '0xa930ed31a9f9d999b66e3ee7ce2b339cf3c160f2'
 // 合約abi
 const contractABI = [
   {
-    anonymous: false,
+    inputs: [],
+    name: 'getOutputInfo',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
     inputs: [
       {
-        indexed: false,
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
+    name: 'outputInfoList',
+    outputs: [
+      {
         internalType: 'string',
-        name: '_siteName',
+        name: 'siteName',
         type: 'string'
       },
       {
-        indexed: false,
         internalType: 'string',
-        name: '_siteAddress',
+        name: 'siteAddress',
         type: 'string'
       },
       {
-        indexed: false,
         internalType: 'uint256',
         name: 'stoneAmount',
         type: 'uint256'
+      },
+      {
+        internalType: 'string',
+        name: 'stoneType',
+        type: 'string'
       }
     ],
-    name: 'NewInputInfo',
-    type: 'event'
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    anonymous: false,
     inputs: [
       {
-        indexed: false,
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    name: 'outputInfos',
+    outputs: [
+      {
         internalType: 'string',
-        name: '_siteName',
+        name: 'siteName',
         type: 'string'
       },
       {
-        indexed: false,
         internalType: 'string',
-        name: '_siteAddress',
+        name: 'siteAddress',
         type: 'string'
       },
       {
-        indexed: false,
         internalType: 'uint256',
         name: 'stoneAmount',
         type: 'uint256'
-      }
-    ],
-    name: 'NewOutputInfo',
-    type: 'event'
-  },
-  {
-    inputs: [],
-    name: 'getAllInputInfos',
-    outputs: [
+      },
       {
-        components: [
-          {
-            internalType: 'string',
-            name: 'siteName',
-            type: 'string'
-          },
-          {
-            internalType: 'string',
-            name: 'siteAddress',
-            type: 'string'
-          },
-          {
-            internalType: 'uint256',
-            name: 'stoneAmount',
-            type: 'uint256'
-          }
-        ],
-        internalType: 'struct EarthWorkSystem.InputInfo[]',
-        name: '',
-        type: 'tuple[]'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'getAllOutputInfos',
-    outputs: [
-      {
-        components: [
-          {
-            internalType: 'string',
-            name: 'siteName',
-            type: 'string'
-          },
-          {
-            internalType: 'string',
-            name: 'siteAddress',
-            type: 'string'
-          },
-          {
-            internalType: 'uint256',
-            name: 'stoneAmount',
-            type: 'uint256'
-          }
-        ],
-        internalType: 'struct EarthWorkSystem.OutputInfo[]',
-        name: '',
-        type: 'tuple[]'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'getTotalInputInfos',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'getTotalOutputInfos',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
+        internalType: 'string',
+        name: 'stoneType',
+        type: 'string'
       }
     ],
     stateMutability: 'view',
@@ -253,41 +198,23 @@ const contractABI = [
     inputs: [
       {
         internalType: 'string',
-        name: '_siteName',
+        name: 'siteName',
         type: 'string'
       },
       {
         internalType: 'string',
-        name: '_siteAddress',
+        name: 'siteAddress',
         type: 'string'
       },
       {
         internalType: 'uint256',
-        name: '_stoneAmount',
+        name: 'stoneAmount',
         type: 'uint256'
-      }
-    ],
-    name: 'sendInputInfo',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_siteName',
-        type: 'string'
       },
       {
         internalType: 'string',
-        name: '_siteAddress',
+        name: 'stoneType',
         type: 'string'
-      },
-      {
-        internalType: 'uint256',
-        name: '_stoneAmount',
-        type: 'uint256'
       }
     ],
     name: 'sendOutputInfo',
@@ -298,8 +225,5 @@ const contractABI = [
 ]
 // 連接合約
 const ethContract = new web3.eth.Contract(contractABI, contractAddress)
-// 當前地址
-web3.defaultAccount = '0x791a0eb4eBf156447a6a9cdeCf7b655903B7793B'
-const fromAddress = web3.defaultAccount
 
-export { ethContract, fromAddress }
+export { ethContract }

@@ -30,12 +30,16 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item href="/homepage">首頁</b-nav-item>
-          <b-nav-item-dropdown text="申報作業" right>
-            <b-dropdown-item href="/declare/contractDeclare"
-              >出土申報</b-dropdown-item
+          <b-nav-item-dropdown text="出土作業" right>
+            <b-dropdown-item href="/output/outputDeclare">申報</b-dropdown-item>
+            <b-dropdown-item href="/output/outputLookup"
+              >資料查詢</b-dropdown-item
             >
-            <b-dropdown-item href="/declare/shelterDeclare"
-              >需土申報</b-dropdown-item
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="需土作業" right>
+            <b-dropdown-item href="/input/inputDeclare">申報</b-dropdown-item>
+            <b-dropdown-item href="/input/inputLookup"
+              >資料查詢</b-dropdown-item
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -47,8 +51,8 @@
             <template #button-content>
               <a>使用者管理</a>
             </template>
-            <b-dropdown-item href="#">錢包餘額查詢</b-dropdown-item>
-            <b-dropdown-item href="#">登出</b-dropdown-item>
+            <b-dropdown-item @click="searchETH">錢包餘額查詢</b-dropdown-item>
+            <b-dropdown-item href="/Login">登出</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>

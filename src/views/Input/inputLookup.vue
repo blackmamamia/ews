@@ -5,7 +5,8 @@
     </div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">首頁</li>
+        <li class="breadcrumb-item"><a href="/homepage">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">需土資料查詢</li>
       </ol>
     </nav>
     <div>
@@ -24,13 +25,13 @@
         :current-page="currentPage"
         fixed
       >
-        <template #cell(type)="data">
+        <template #cell(name)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(produceAmount)="data">
+        <template #cell(address)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
@@ -42,8 +43,10 @@
           }}</span>
         </template>
 
-        <template v-slot:cell(actions)="{ item }">
-          <span><b-btn @click="editItem(item)">撮合</b-btn></span>
+        <template #cell(type)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
         </template>
       </b-table>
     </div>
@@ -55,45 +58,47 @@ import Navbar from '@/components/Navbar.vue'
 import { ethContract } from '@/service/index.js'
 
 export default {
-  name: 'HomePage',
   data () {
     return {
-      perPage: 16,
-      currentPage: 1,
-      // sortBy: null,
-      // sortDesc: false,
       fields: [
         {
-          key: 'type',
-          label: '土質種類',
-          tdClass: 'align-middle'
+          key: 'name',
+          label: '工地名稱',
+          sortable: true,
+          sortDirection: 'desc'
         },
         {
-          key: 'produceAmount',
-          label: '出土數量',
-          tdClass: 'align-middle'
+          key: 'address',
+          label: '工地地點',
+          sortable: true,
+          sortDirection: 'desc'
         },
         {
           key: 'demandAmount',
           label: '需土數量',
-          tdClass: 'align-middle'
+          sortable: true,
+          sortDirection: 'desc'
         },
         {
-          key: 'actions',
-          label: '操作',
-          tdClass: 'align-middle'
+          key: 'type',
+          label: '土質種類',
+          sortable: true,
+          sortDirection: 'desc'
         }
       ],
       list: [],
+      currentPage: 1,
+      perPage: 10,
       filter: null,
       show: true
-      // items: [
-      //   {
-      //     type: 'B1',
-      //     produceAmount: '100',
-      //     demandAmount: '100'
-      //   }
-      // ]
+    }
+  },
+  components: {
+    Navbar
+  },
+  computed: {
+    totalRows () {
+      return this.list.length
     }
   },
   async mounted () {
@@ -113,15 +118,7 @@ export default {
       this.list.push(OutputInfo)
     }
     this.show = false
-  },
-  methods: {},
-  components: { Navbar },
-  computed: {
-    rows () {
-      return this.list.length
-    }
-  },
-  watch: {}
+  }
 }
 </script>
 

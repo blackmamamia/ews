@@ -24,7 +24,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.name"
+          v-model="project.siteName"
         />
         <br />
       </div>
@@ -33,7 +33,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.address"
+          v-model="project.siteAddress"
         />
         <br />
       </div>
@@ -42,7 +42,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.produceAmount"
+          v-model="project.stoneAmount"
         />
         <br />
       </div>
@@ -51,7 +51,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.type"
+          v-model="project.stoneType"
         />
         <br />
       </div>
@@ -86,20 +86,35 @@ export default {
   data () {
     return {
       project: {
-        name: '',
-        address: '',
-        produceAmount: '',
-        type: ''
+        siteName: '',
+        siteAddress: '',
+        stoneAmount: '',
+        stoneType: ''
       }
     }
   },
   components: { Navbar },
   methods: {
-    contractDeclareSave () {
+    async contractDeclareSave () {
       const yes = confirm('確定儲存嗎？')
       if (yes) {
+        await ethContract.methods
+          .sendOutputInfo(
+            this.project.siteName,
+            this.project.siteAddress,
+            this.project.stoneAmount,
+            this.project.stoneType
+          )
+          .send({
+            from: (
+              await window.ethereum.request({ method: 'eth_requestAccounts' })
+            )[0]
+          })
+          .then(function (receipt) {
+            console.log(receipt)
+          })
         alert('儲存成功！')
-        this.$router.push({ name: 'HomePage' })
+        this.$router.push({ name: 'outputLookup' })
       } else {
         alert('取消傳送')
       }
@@ -114,7 +129,9 @@ export default {
       await ethContract.methods
         .sendOutputInfo('E801', '新北市', 100)
         .send({
-          from: '0x791a0eb4eBf156447a6a9cdeCf7b655903B7793B'
+          from: (
+            await window.ethereum.request({ method: 'eth_requestAccounts' })
+          )[0]
         })
         .then(function (receipt) {
           console.log(receipt)
