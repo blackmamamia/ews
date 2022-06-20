@@ -25,6 +25,12 @@
         :current-page="currentPage"
         fixed
       >
+        <template #cell(numbering)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
+        </template>
+
         <template #cell(siteName)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
@@ -48,10 +54,25 @@
             data.value
           }}</span>
         </template>
+
+        <template #cell(startDate)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
+        </template>
+
+        <template #cell(endDate)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
+        </template>
+
+        <template #cell(review)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value ? "已撮合" : "未撮合"
+          }}</span>
+        </template>
       </b-table>
-      <div>
-        <button @click="test">測試</button>
-      </div>
     </div>
   </div>
 </template>
@@ -64,6 +85,12 @@ export default {
   data () {
     return {
       fields: [
+        {
+          key: 'numbering',
+          label: '工程編碼：',
+          sortable: true,
+          sortDirection: 'desc'
+        },
         {
           key: 'siteName',
           label: '工地名稱',
@@ -78,13 +105,31 @@ export default {
         },
         {
           key: 'stoneAmount',
-          label: '需土數量',
+          label: '出土數量',
           sortable: true,
           sortDirection: 'desc'
         },
         {
           key: 'stoneType',
           label: '土質種類',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'startDate',
+          label: '預定起日：',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'endDate',
+          label: '預定迄日：',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'review',
+          label: '處理狀況',
           sortable: true,
           sortDirection: 'desc'
         }

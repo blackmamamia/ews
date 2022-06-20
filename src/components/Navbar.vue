@@ -42,6 +42,7 @@
               >資料查詢</b-dropdown-item
             >
           </b-nav-item-dropdown>
+          <b-nav-item href="/matchup">撮合作業</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

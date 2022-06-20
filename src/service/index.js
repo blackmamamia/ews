@@ -110,12 +110,142 @@ import Web3 from 'web3'
 
 const web3 = new Web3(Web3.givenProvider || 'ws://http://localhost:8080/')
 // 合約地址
-const contractAddress = '0xa930ed31a9f9d999b66e3ee7ce2b339cf3c160f2'
+const contractAddress = '0x476c5ff39c6c7a936e78ba7e97b4480187e3187b'
 // 合約abi
 const contractABI = [
   {
     inputs: [],
+    name: 'getInputInfo',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
     name: 'getOutputInfo',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getTotalInPutAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getTotalOutPutAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
+    name: 'inputInfoList',
+    outputs: [
+      {
+        internalType: 'string',
+        name: 'siteName',
+        type: 'string'
+      },
+      {
+        internalType: 'string',
+        name: 'siteAddress',
+        type: 'string'
+      },
+      {
+        internalType: 'uint256',
+        name: 'stoneAmount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'string',
+        name: 'stoneType',
+        type: 'string'
+      },
+      {
+        internalType: 'bool',
+        name: 'review',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    name: 'inputInfos',
+    outputs: [
+      {
+        internalType: 'string',
+        name: 'siteName',
+        type: 'string'
+      },
+      {
+        internalType: 'string',
+        name: 'siteAddress',
+        type: 'string'
+      },
+      {
+        internalType: 'uint256',
+        name: 'stoneAmount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'string',
+        name: 'stoneType',
+        type: 'string'
+      },
+      {
+        internalType: 'bool',
+        name: 'review',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'matchup',
     outputs: [
       {
         internalType: 'uint256',
@@ -155,6 +285,11 @@ const contractABI = [
         internalType: 'string',
         name: 'stoneType',
         type: 'string'
+      },
+      {
+        internalType: 'bool',
+        name: 'review',
+        type: 'bool'
       }
     ],
     stateMutability: 'view',
@@ -189,6 +324,11 @@ const contractABI = [
         internalType: 'string',
         name: 'stoneType',
         type: 'string'
+      },
+      {
+        internalType: 'bool',
+        name: 'review',
+        type: 'bool'
       }
     ],
     stateMutability: 'view',
@@ -215,6 +355,44 @@ const contractABI = [
         internalType: 'string',
         name: 'stoneType',
         type: 'string'
+      },
+      {
+        internalType: 'bool',
+        name: 'review',
+        type: 'bool'
+      }
+    ],
+    name: 'sendInputInfo',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'siteName',
+        type: 'string'
+      },
+      {
+        internalType: 'string',
+        name: 'siteAddress',
+        type: 'string'
+      },
+      {
+        internalType: 'uint256',
+        name: 'stoneAmount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'string',
+        name: 'stoneType',
+        type: 'string'
+      },
+      {
+        internalType: 'bool',
+        name: 'review',
+        type: 'bool'
       }
     ],
     name: 'sendOutputInfo',

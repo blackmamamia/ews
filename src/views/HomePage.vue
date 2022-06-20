@@ -30,21 +30,21 @@
           }}</span>
         </template>
 
-        <template #cell(produceAmount)="data">
+        <template #cell(totalOutputAmount)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(demandAmount)="data">
+        <template #cell(totalInputAmount)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template v-slot:cell(actions)="{ item }">
+        <!-- <template v-slot:cell(actions)="{ item }">
           <span><b-btn @click="editItem(item)">撮合</b-btn></span>
-        </template>
+        </template> -->
       </b-table>
     </div>
   </div>
@@ -69,22 +69,58 @@ export default {
           tdClass: 'align-middle'
         },
         {
-          key: 'produceAmount',
-          label: '出土數量',
+          key: 'totalOutputAmount',
+          label: '總出土數量',
           tdClass: 'align-middle'
         },
         {
-          key: 'demandAmount',
-          label: '需土數量',
-          tdClass: 'align-middle'
-        },
-        {
-          key: 'actions',
-          label: '操作',
+          key: 'totalInputAmount',
+          label: '總需土數量',
           tdClass: 'align-middle'
         }
+        // {
+        //   key: 'actions',
+        //   label: '操作',
+        //   tdClass: 'align-middle'
+        // }
       ],
-      list: [],
+      list: [
+        {
+          type: 'B1',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        },
+        {
+          type: 'B2',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        },
+        {
+          type: 'B3',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        },
+        {
+          type: 'B4',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        },
+        {
+          type: 'B5',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        },
+        {
+          type: 'B6',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        },
+        {
+          type: 'B7',
+          totalOutputAmount: '',
+          totalInputAmount: ''
+        }
+      ],
       filter: null,
       show: true
       // items: [
@@ -98,20 +134,31 @@ export default {
   },
   async mounted () {
     const amount = await ethContract.methods
-      .getOutputInfo()
+      .getTotalOutPutAmount()
       .call()
       .then(function (receipt) {
         return receipt
       })
     for (let i = 0; i < amount; i++) {
-      const OutputInfo = await ethContract.methods
-        .allOutputInfos(i)
+      const totalInputAmount = await ethContract.methods
+        .outputInfos(i)
         .call()
         .then(function (receipt) {
           return receipt
         })
-      this.list.push(OutputInfo)
+
+      this.list.push(totalInputAmount)
     }
+    this.list.push()
+    // for (let i = 0; i < amount; i++) {
+    //   const OutputInfo = await ethContract.methods
+    //     .allOutputInfos(i)
+    //     .call()
+    //     .then(function (receipt) {
+    //       return receipt
+    //     })
+    //   this.list.push(OutputInfo)
+    // }
     this.show = false
   },
   methods: {},

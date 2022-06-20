@@ -20,11 +20,20 @@
       "
     >
       <div style="padding-top: 70px">
+        <span style="font-size: 20px; color: black">工程編碼：</span>
+        <input
+          id="input-lg"
+          style="width: 50%; height: 30px"
+          v-model="output.numbering"
+        />
+        <br />
+      </div>
+      <div style="padding-top: 70px">
         <span style="font-size: 20px; color: black">工程名稱：</span>
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.siteName"
+          v-model="output.siteName"
         />
         <br />
       </div>
@@ -33,7 +42,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.siteAddress"
+          v-model="output.siteAddress"
         />
         <br />
       </div>
@@ -42,7 +51,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.stoneAmount"
+          v-model="output.stoneAmount"
         />
         <br />
       </div>
@@ -51,7 +60,25 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.stoneType"
+          v-model="output.stoneType"
+        />
+        <br />
+      </div>
+      <div style="padding-top: 30px">
+        <span style="font-size: 20px; color: black">預定起日：</span>
+        <input
+          id="input-lg"
+          style="width: 50%; height: 30px"
+          v-model="output.startDate"
+        />
+        <br />
+      </div>
+      <div style="padding-top: 30px">
+        <span style="font-size: 20px; color: black">預定迄日：</span>
+        <input
+          id="input-lg"
+          style="width: 50%; height: 30px"
+          v-model="output.endDate"
         />
         <br />
       </div>
@@ -70,7 +97,7 @@
       <div style="margin-left: 500px; margin-top: 50px">
         <b-button class="btn" @click="contractDeclareSave">儲存</b-button>
         <b-button @click="back" style="margin-left: 30px">返回</b-button>
-        <b-button variant="danger" @click="test">測試鈕</b-button>
+        <!-- <b-button variant="danger" @click="test">測試鈕</b-button> -->
       </div>
     </div>
   </div>
@@ -85,11 +112,14 @@ export default {
   name: 'contractDeclare',
   data () {
     return {
-      project: {
+      output: {
+        numbering: 'EAA00001',
         siteName: '',
         siteAddress: '',
         stoneAmount: '',
-        stoneType: ''
+        stoneType: '',
+        startDate: '',
+        endDate: ''
       }
     }
   },
@@ -100,10 +130,14 @@ export default {
       if (yes) {
         await ethContract.methods
           .sendOutputInfo(
-            this.project.siteName,
-            this.project.siteAddress,
-            this.project.stoneAmount,
-            this.project.stoneType
+            this.output.numbering,
+            this.output.siteName,
+            this.output.siteAddress,
+            this.output.stoneAmount,
+            this.output.stoneType,
+            this.output.startDate,
+            this.output.endDate,
+            false
           )
           .send({
             from: (

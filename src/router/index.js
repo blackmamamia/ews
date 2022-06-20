@@ -57,6 +57,14 @@ const routes = [
       title: '需土資料查詢'
     },
     component: () => import('../views/Input/inputLookup')
+  },
+  {
+    path: '/matchup',
+    name: 'Matchup',
+    meta: {
+      title: '撮合作業'
+    },
+    component: () => import('../views/Matchup')
   }
   // {
   //   path: '/home',

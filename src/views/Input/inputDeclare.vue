@@ -20,11 +20,20 @@
       "
     >
       <div style="padding-top: 70px">
+        <span style="font-size: 20px; color: black">工程編碼：</span>
+        <input
+          id="input-lg"
+          style="width: 50%; height: 30px"
+          v-model="input.numbering"
+        />
+        <br />
+      </div>
+      <div style="padding-top: 70px">
         <span style="font-size: 20px; color: black">工程名稱：</span>
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.name"
+          v-model="input.siteName"
         />
         <br />
       </div>
@@ -33,7 +42,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.address"
+          v-model="input.siteAddress"
         />
         <br />
       </div>
@@ -42,7 +51,7 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.demandAmount"
+          v-model="input.stoneAmount"
         />
         <br />
       </div>
@@ -51,7 +60,25 @@
         <input
           id="input-lg"
           style="width: 50%; height: 30px"
-          v-model="project.type"
+          v-model="input.stoneType"
+        />
+        <br />
+      </div>
+      <div style="padding-top: 30px">
+        <span style="font-size: 20px; color: black">預定起日：</span>
+        <input
+          id="input-lg"
+          style="width: 50%; height: 30px"
+          v-model="input.startDate"
+        />
+        <br />
+      </div>
+      <div style="padding-top: 30px">
+        <span style="font-size: 20px; color: black">預定迄日：</span>
+        <input
+          id="input-lg"
+          style="width: 50%; height: 30px"
+          v-model="input.endDate"
         />
         <br />
       </div>
@@ -76,27 +103,52 @@
 </template>
 
 <script>
+import Web3 from 'web3'
+import { ethContract, fromAddress } from '@/service/index.js'
+
 import Navbar from '@/components/Navbar.vue'
 
 export default {
   name: 'shelterDeclare',
   data () {
     return {
-      project: {
-        name: '',
-        address: '',
-        demandAmount: '',
-        type: ''
+      input: {
+        numbering: 'EBB00001',
+        siteName: '',
+        siteAddress: '',
+        stoneAmount: '',
+        stoneType: '',
+        startDate: '',
+        endDate: ''
       }
     }
   },
   components: { Navbar },
   methods: {
-    shelterDeclareSave () {
+    async shelterDeclareSave () {
       const yes = confirm('確定儲存嗎？')
       if (yes) {
+        await ethContract.methods
+          .sendInputInfo(
+            this.input.numbering,
+            this.input.siteName,
+            this.input.siteAddress,
+            this.input.stoneAmount,
+            this.input.stoneType,
+            this.input.startDate,
+            this.input.endDate,
+            false
+          )
+          .send({
+            from: (
+              await window.ethereum.request({ method: 'eth_requestAccounts' })
+            )[0]
+          })
+          .then(function (receipt) {
+            console.log(receipt)
+          })
         alert('儲存成功！')
-        this.$router.push({ name: 'HomePage' })
+        this.$router.push({ name: 'inputLookup' })
       } else {
         alert('取消傳送')
       }

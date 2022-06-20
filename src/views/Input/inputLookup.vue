@@ -25,27 +25,51 @@
         :current-page="currentPage"
         fixed
       >
-        <template #cell(name)="data">
+        <template #cell(numbering)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(address)="data">
+        <template #cell(siteName)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(demandAmount)="data">
+        <template #cell(siteAddress)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
           }}</span>
         </template>
 
-        <template #cell(type)="data">
+        <template #cell(stoneAmount)="data">
           <span style="font-weight: normal; color: black; font-size: 14px">{{
             data.value
+          }}</span>
+        </template>
+
+        <template #cell(stoneType)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
+        </template>
+
+        <template #cell(startDate)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
+        </template>
+
+        <template #cell(endDate)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value
+          }}</span>
+        </template>
+
+        <template #cell(review)="data">
+          <span style="font-weight: normal; color: black; font-size: 14px">{{
+            data.value ? "已撮合" : "未撮合"
           }}</span>
         </template>
       </b-table>
@@ -62,26 +86,50 @@ export default {
     return {
       fields: [
         {
-          key: 'name',
+          key: 'numbering',
+          label: '工程編碼：',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'siteName',
           label: '工地名稱',
           sortable: true,
           sortDirection: 'desc'
         },
         {
-          key: 'address',
+          key: 'siteAddress',
           label: '工地地點',
           sortable: true,
           sortDirection: 'desc'
         },
         {
-          key: 'demandAmount',
-          label: '需土數量',
+          key: 'stoneAmount',
+          label: '出土數量',
           sortable: true,
           sortDirection: 'desc'
         },
         {
-          key: 'type',
+          key: 'stoneType',
           label: '土質種類',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'startDate',
+          label: '預定起日：',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'endDate',
+          label: '預定迄日：',
+          sortable: true,
+          sortDirection: 'desc'
+        },
+        {
+          key: 'review',
+          label: '處理狀況',
           sortable: true,
           sortDirection: 'desc'
         }
@@ -103,19 +151,19 @@ export default {
   },
   async mounted () {
     const amount = await ethContract.methods
-      .getOutputInfo()
+      .getInputInfo()
       .call()
       .then(function (receipt) {
         return receipt
       })
     for (let i = 0; i < amount; i++) {
-      const OutputInfo = await ethContract.methods
-        .allOutputInfos(i)
+      const inputInfo = await ethContract.methods
+        .inputInfos(i)
         .call()
         .then(function (receipt) {
           return receipt
         })
-      this.list.push(OutputInfo)
+      this.list.push(inputInfo)
     }
     this.show = false
   }
